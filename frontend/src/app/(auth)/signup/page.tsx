@@ -5,10 +5,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Trophy, CreditCard, ChevronRight, ChevronLeft, Check, Search } from "lucide-react";
+
+import { Heart, ChevronRight, ChevronLeft, Check, Search } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+
 import { cn } from "@/lib/utils";
 import { authApi, charitiesApi } from "@/lib/api";
 
@@ -28,7 +28,7 @@ const plans = [
 ];
 
 export default function SignupPage() {
-  const router = useRouter();
+  // note: router removed; navigation done via window.location.href after signup
   const [step, setStep] = useState(1);
   const [dbCharities, setDbCharities] = useState<any[]>([]);
   const [selectedCharity, setSelectedCharity] = useState<string | null>(null);
@@ -91,29 +91,13 @@ export default function SignupPage() {
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("user", JSON.stringify(data.data.user));
       window.location.href = "/dashboard";
-    } catch (err: any) {
-      setError(err.message || "An error occurred during signup.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "An error occurred during signup.");
     } finally {
       setLoading(false);
     }
   };
 
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 50 : -50,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 50 : -50,
-      opacity: 0,
-    }),
-  };
 
   return (
     <div className="space-y-6">
@@ -192,13 +176,13 @@ export default function SignupPage() {
               </div>
 
               <div className="grid grid-cols-1 gap-3 max-h-[300px] overflow-y-auto pr-1">
-                {(dbCharities.length > 0 ? dbCharities : charities).map((c: any) => (
+                {(dbCharities.length > 0 ? dbCharities : charities).map((c: {_id?: string; id?: number; name: string; description: string; icon?: string}) => (
                   <div
-                    key={c._id || c.id}
-                    onClick={() => setSelectedCharity(c._id || c.id.toString())}
+                    key={c._id ?? c.id}
+                    onClick={() => setSelectedCharity(c._id ?? String(c.id ?? ""))}
                     className={cn(
                       "p-4 rounded-2xl border transition-all cursor-pointer flex items-center gap-4",
-                      selectedCharity === (c._id || c.id.toString())
+                      selectedCharity === (c._id ?? String(c.id ?? ""))
                         ? "bg-primary/10 border-primary shadow-sm" 
                         : "bg-surface border-card-border hover:border-primary/40"
                     )}
@@ -208,7 +192,7 @@ export default function SignupPage() {
                       <h4 className="font-bold text-sm">{c.name}</h4>
                       <p className="text-xs text-foreground/50 line-clamp-1">{c.description}</p>
                     </div>
-                    {selectedCharity === (c._id || c.id.toString()) && <Check className="text-primary" size={20} />}
+                    {selectedCharity === (c._id ?? String(c.id ?? "")) && <Check className="text-primary" size={20} />}
                   </div>
                 ))}
               </div>

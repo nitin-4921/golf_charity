@@ -1,15 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Search, Heart, Globe, Users, Filter, Check, ArrowRight, TreePine, GraduationCap, Loader2 } from "lucide-react";
+import { Search, Heart, Filter, Check, ArrowRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { charitiesApi } from "@/lib/api";
 
+interface Charity {
+  _id: string;
+  name: string;
+  description: string;
+  totalDonations: number;
+}
+
 export default function CharitiesDashboardPage() {
-  const [charities, setCharities] = useState<any[]>([]);
+  const [charities, setCharities] = useState<Charity[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -34,8 +40,8 @@ export default function CharitiesDashboardPage() {
     try {
       await charitiesApi.select(selectedId, 10);
       setMessage("Charity updated successfully!");
-    } catch (err: any) {
-      setMessage(err.message);
+    } catch (err: unknown) {
+      setMessage(err instanceof Error ? err.message : "Failed to save.");
     } finally {
       setSaving(false);
     }

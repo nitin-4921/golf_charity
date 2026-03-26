@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Users, BarChart3, Heart, Trophy, Search, MoreHorizontal, ArrowUpRight, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";

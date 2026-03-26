@@ -18,7 +18,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-foreground/50 leading-relaxed mb-6">
-              Empowering surfers, one swing at a time. The world's first premium golf subscription 
+              Empowering surfers, one swing at a time. The world&apos;s first premium golf subscription 
               that puts the planet first.
             </p>
             <div className="flex gap-4">

@@ -6,8 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
-  LineChart, 
-  Line, 
   XAxis, 
   YAxis, 
   CartesianGrid, 
@@ -16,14 +14,12 @@ import {
   AreaChart,
   Area
 } from "recharts";
-import { Flag, Plus, Trash2, Calendar, MapPin, ChevronRight, TrendingDown, Check, Trophy } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Flag, Plus, Trash2, Calendar, ChevronRight, TrendingDown, Check, Trophy } from "lucide-react";
 import { scoresApi } from "@/lib/api";
 
 export default function ScoresPage() {
-  const [scores, setScores] = useState<any[]>([]);
+  const [scores, setScores] = useState<{_id: string; value: number; date: string}[]>([]);
   const [newScore, setNewScore] = useState("");
-  const [newVenue, setNewVenue] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -47,9 +43,8 @@ export default function ScoresPage() {
       const res = await scoresApi.addScore(val, new Date().toISOString());
       setScores(res.data.scores);
       setNewScore("");
-      setNewVenue("");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to add score.");
     } finally {
       setSaving(false);
     }
@@ -57,12 +52,12 @@ export default function ScoresPage() {
 
   const removeScore = async (scoreId: string) => {
     try {
-      const res = await scoresApi.deleteScore(scoreId);
+      await scoresApi.deleteScore(scoreId);
       // Refresh scores after delete
       const fresh = await scoresApi.getScores();
       setScores(fresh.data.scores);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to delete score.");
     }
   };
 

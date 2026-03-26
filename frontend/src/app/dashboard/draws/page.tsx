@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trophy, Calendar, Users, Star, ArrowRight, Play, Eye } from "lucide-react";
+import { Trophy, Users, Star, ArrowRight, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const previousWinners = [

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Upload, FileCheck, Clock, ShieldCheck, AlertCircle, CheckCircle2, ChevronRight, Share2, Check } from "lucide-react";
+import { Upload, FileCheck, Clock, ShieldCheck, AlertCircle, CheckCircle2, Share2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const verificationSteps = [
@@ -15,7 +15,6 @@ const verificationSteps = [
 ];
 
 export default function VerificationPage() {
-  const [dragActive, setDragActive] = useState(false);
 
   return (
     <div className="space-y-8 pb-10">

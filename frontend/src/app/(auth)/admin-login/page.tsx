@@ -39,8 +39,8 @@ export default function AdminLoginPage() {
       localStorage.setItem("user", JSON.stringify(data.data.user));
 
       router.push("/dashboard/admin");
-    } catch (err: any) {
-      setError(err.message || "Login failed.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Login failed.");
     } finally {
       setLoading(false);
     }

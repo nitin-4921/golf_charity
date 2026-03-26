@@ -3,10 +3,9 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart, Globe, Users, ShieldCheck, TreePine, CheckCircle2, ArrowLeft, Share2, DollarSign } from "lucide-react";
+import { Globe, Users, ShieldCheck, TreePine, CheckCircle2, ArrowLeft, Share2 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { cn } from "@/lib/utils";
 
 export default function CharityDetailPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

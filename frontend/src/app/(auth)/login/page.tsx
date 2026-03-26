@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+
 import { Layout, Mail, Loader2 } from "lucide-react";
 import { authApi } from "@/lib/api";
 
 export default function LoginPage() {
-  const router = useRouter();
+
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
@@ -32,8 +32,8 @@ export default function LoginPage() {
       localStorage.setItem("user", JSON.stringify(data.data.user));
       // Use full navigation to ensure dashboard mounts fresh with auth state
       window.location.href = "/dashboard";
-    } catch (err: any) {
-      setError(err.message || "Login failed. Please try again.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
